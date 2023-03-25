@@ -15,11 +15,9 @@ public class SlaveController {
 
     private final UserSlaveRepository userRepository;
 
+    // http://localhost:8080/slave?name=master&age=20       // slave에 저장
     @GetMapping("/slave")
     public User masterInsert(@RequestParam("name") String name, @RequestParam("age") int age) {
-        User newUser = new User(name, age);
-        User savedUser = userRepository.save(newUser);
-        log.info("newUser == savedUser : {}", newUser == savedUser);
-        return savedUser;
+        return userRepository.save(new User(name, age));
     }
 }

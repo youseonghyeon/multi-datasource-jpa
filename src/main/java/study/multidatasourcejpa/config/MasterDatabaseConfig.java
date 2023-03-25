@@ -23,8 +23,12 @@ import java.util.HashMap;
 @PropertySource("classpath:application.yml")
 @RequiredArgsConstructor
 @EnableJpaRepositories(
+        // slave repository가 존재하는 패키지
+        // 주의!!! master repository와 피키지가 동일하면 안됨!!!
         basePackages = "study.multidatasourcejpa.repository.master",
+        // EntityManager 빈 이름
         entityManagerFactoryRef = "masterEntityManager",
+        // transactionManager 빈 이름
         transactionManagerRef = "masterTransactionManager"
 )
 public class MasterDatabaseConfig {
@@ -34,17 +38,19 @@ public class MasterDatabaseConfig {
     @Primary
     public LocalContainerEntityManagerFactoryBean masterEntityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        // masterDB 설정
         em.setDataSource(masterDataSource());
 
-        // 도메인 경로
-        String[] domainPath = {"study.multidatasourcejpa.domain"};
+        // 도메인 경로 설정
+        // 도메인은 Master와 Slave 둘다 같아도 됨
+        String[] domainPath = new String[]{"study.multidatasourcejpa.domain"};
         em.setPackagesToScan(domainPath);
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
 
+        // Jpa 환경 설정
         HashMap<String, Object> propertyMap = new HashMap<>();
         propertyMap.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-        log.info(propertyMap.get("hibernate.hbm2ddl.auto").toString());
         propertyMap.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         em.setJpaPropertyMap(propertyMap);
 

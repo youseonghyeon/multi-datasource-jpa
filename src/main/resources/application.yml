@@ -1,12 +1,14 @@
 spring.datasource:
   master:
-    jdbcUrl: jdbc:mysql://localhost:3307/sharding
+    jdbcUrl: jdbc:mysql://localhost:3307/sharding # master DB url
     username: epfzja
     password: Tjdgus12
   slave:
-    jdbcUrl: jdbc:mysql://localhost:3308/sharding
+    jdbcUrl: jdbc:mysql://localhost:3308/sharding # slave DB url
     username: epfzja
     password: Tjdgus12
+
 hibernate:
+  dialect: org.hibernate.dialect.MySQLDialect # Jpa? ?? ????? ????? ????...
   hbm2ddl:
     auto: create

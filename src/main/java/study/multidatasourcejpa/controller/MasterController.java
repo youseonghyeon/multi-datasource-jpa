@@ -15,12 +15,10 @@ public class MasterController {
 
     private final UserMasterRepository userRepository;
 
+    // http://localhost:8080/master?name=master&age=20      // master에 저장
     @GetMapping("/master")
     public User masterInsert(@RequestParam("name") String name, @RequestParam("age") int age) {
-        User newUser = new User(name, age);
-        User savedUser = userRepository.save(newUser);
-        log.info("newUser == savedUser : {}", newUser == savedUser);
-        return savedUser;
+        return userRepository.save(new User(name, age));
     }
 
 
