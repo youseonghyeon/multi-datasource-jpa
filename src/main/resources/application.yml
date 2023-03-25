@@ -1,0 +1,12 @@
+spring.datasource:
+  master:
+    jdbcUrl: jdbc:mysql://localhost:3307/sharding
+    username: epfzja
+    password: Tjdgus12
+  slave:
+    jdbcUrl: jdbc:mysql://localhost:3308/sharding
+    username: epfzja
+    password: Tjdgus12
+hibernate:
+  hbm2ddl:
+    auto: create
