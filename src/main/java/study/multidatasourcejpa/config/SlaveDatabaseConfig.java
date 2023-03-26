@@ -47,6 +47,7 @@ public class SlaveDatabaseConfig {
         HashMap<String, Object> propertyMap = new HashMap<>();
         propertyMap.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         propertyMap.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        propertyMap.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         em.setJpaPropertyMap(propertyMap);
 
         return em;

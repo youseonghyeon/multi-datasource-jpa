@@ -9,6 +9,7 @@ spring.datasource:
     password: Tjdgus12
 
 hibernate:
-  dialect: org.hibernate.dialect.MySQLDialect # Jpa? ?? ????? ????? ????...
+  dialect: org.hibernate.dialect.MySQLDialect
+  show_sql: true
   hbm2ddl:
     auto: create

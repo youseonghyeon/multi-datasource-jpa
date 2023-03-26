@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import study.multidatasourcejpa.domain.User;
 import study.multidatasourcejpa.repository.UserRepository;
+import study.multidatasourcejpa.repository.UserRepositoryHelper;
 import study.multidatasourcejpa.repository.master.UserMasterRepository;
 import study.multidatasourcejpa.repository.slave.UserSlaveRepository;
 
@@ -19,11 +20,11 @@ public class DataSourceSelector {
     private final UserMasterRepository userMasterRepository;
     private final UserSlaveRepository userSlaveRepository;
 
-    public UserRepository getUserRepository(User user) {
+    public UserRepositoryHelper getUserRepository(User user) {
         return this.getUserRepository(user.getName());
     }
 
-    public UserRepository getUserRepository(String name) {
+    public UserRepositoryHelper getUserRepository(String name) {
         if (!StringUtils.hasText(name)) {
             throw new IllegalArgumentException("username is a required input!!");
         }

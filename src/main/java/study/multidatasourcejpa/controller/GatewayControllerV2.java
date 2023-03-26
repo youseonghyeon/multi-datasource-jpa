@@ -6,14 +6,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import study.multidatasourcejpa.domain.User;
-import study.multidatasourcejpa.repository.UserRepository;
+import study.multidatasourcejpa.repository.UserRepositoryHelper;
 import study.multidatasourcejpa.service.DataSourceSelector;
-
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-public class GatewayController {
+public class GatewayControllerV2 {
 
     private final DataSourceSelector dataSourceSelector;
 
@@ -24,18 +22,16 @@ public class GatewayController {
     // http://localhost:8080/gateway?name=aa&age=20     // master에 저장
     // http://localhost:8080/gateway?name=zz&age=20     // slave에 저장
 
-    // 현재 사용 불가
 
-//    @GetMapping("/gateway")
-//    public User gatewayController(@RequestParam("name") String name, @RequestParam("age") int age) {
-//        UserRepository userRepository = dataSourceSelector.getUserRepository(name);
-//        return userRepository.save(new User(name, age));
-//    }
-//
-//    @GetMapping("/gateway/{name}")
-//    public User findUserByName(@PathVariable("name") String name) {
-//        UserRepository userRepository = dataSourceSelector.getUserRepository(name);
-//        User findUser = userRepository.findByName(name);
-//        return Objects.requireNonNullElseGet(findUser, () -> new User("not exists", 0));
-//    }
+    @GetMapping("/gateway-v2")
+    public User gatewayController(@RequestParam("name") String name, @RequestParam("age") int age) {
+        UserRepositoryHelper userRepository = dataSourceSelector.getUserRepository(name);
+        return userRepository.save(new User(name, age));
+    }
+
+    @GetMapping("/gateway-v2/{name}")
+    public User findUserByName(@PathVariable("name") String name) {
+        UserRepositoryHelper userRepository = dataSourceSelector.getUserRepository(name);
+        return userRepository.findByName(name);
+    }
 }
