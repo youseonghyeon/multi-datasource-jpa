@@ -21,7 +21,7 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 @EnableJpaRepositories(
         // slave repository가 존재하는 패키지
-        // 주의!!! master repository와 피키지가 동일하면 안됨!!!
+        // ##주의## master repository와 패키지가 동일하면 안됨
         basePackages = "study.multidatasourcejpa.repository.slave",
         // EntityManager 빈 이름
         entityManagerFactoryRef = "slaveEntityManager",
@@ -34,7 +34,7 @@ public class SlaveDatabaseConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean slaveEntityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        // slaveDB 설정
+        // slave datasource 설정
         em.setDataSource(slaveDatasource());
         // 도메인 경로 설정
         // 도메인은 Master와 Slave 둘다 같아도 됨

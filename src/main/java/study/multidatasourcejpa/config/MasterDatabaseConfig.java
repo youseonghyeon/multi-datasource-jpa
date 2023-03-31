@@ -23,8 +23,8 @@ import java.util.HashMap;
 @PropertySource("classpath:application.yml")
 @RequiredArgsConstructor
 @EnableJpaRepositories(
-        // slave repository가 존재하는 패키지
-        // 주의!!! master repository와 피키지가 동일하면 안됨!!!
+        // master repository가 존재하는 패키지
+        // ##주의## slave repository와 패키지가 동일하면 안됨
         basePackages = "study.multidatasourcejpa.repository.master",
         // EntityManager 빈 이름
         entityManagerFactoryRef = "masterEntityManager",
@@ -38,11 +38,10 @@ public class MasterDatabaseConfig {
     @Primary
     public LocalContainerEntityManagerFactoryBean masterEntityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        // masterDB 설정
+        // master datasource 설정
         em.setDataSource(masterDataSource());
 
-        // 도메인 경로 설정
-        // 도메인은 Master와 Slave 둘다 같아도 됨
+        // 도메인 경로 설정 (도메인은 Master와 Slave 둘다 같아도 됨)
         String[] domainPath = new String[]{"study.multidatasourcejpa.domain"};
         em.setPackagesToScan(domainPath);
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -73,6 +72,4 @@ public class MasterDatabaseConfig {
 
         return tm;
     }
-
-
 }
